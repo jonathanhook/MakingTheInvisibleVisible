@@ -1,28 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>Gallery</title>
-</head>
-<body>
+<div class="jumbotron">
+	<h1>Gallery</h1>
+    	<p class="lead">Take a look at some of the pictures, videos and sounds that we've captured during the workshops.</p>
+  	</div>
+
 	<?php if(count($images) > 0): ?>
-		<h2>Images</h2>
-		<?php foreach ($images as $i): ?>
-		<img src="<?php echo base_url() . '/media/' . $i->name; ?>" height="100" />
-		<?php endforeach; ?>
+
+  <style>
+  .gallery-image
+  {
+    width:120px;
+    height:120px;
+    background-color: #c1c1c1;
+  }
+  </style>
+	<div class="row">
+	 <div class="col-md-12"><h4>Pictures</h4></div> 	
+  </div>
+    
+    <div class="row">
+    <?php for($i = 0; $i < count($images); $i++): ?>
+
+      <div class="col-md-3">
+        <a href="<?php echo base_url() . '/media/' . $images[$i]->name; ?>" class="thumbnail">
+          <img src="<?php echo base_url() . '/media/' . $images[$i]->name; ?>" />
+        </a>
+      </div>
+
+    <?php endfor; ?>
+  </div>
 	<?php endif; ?>
 
-	<?php if(count($videos) > 0): ?>
-	<h2>Videos</h2>
-	<?php foreach ($videos as $v): ?>
-	<?php echo $v->name; ?><br />
-	<?php endforeach; ?>
-	<?php endif; ?>
 
-	<?php if(count($audio) > 0): ?>
-	<h2>Audio</h2>
-	<?php foreach ($audio as $a): ?>
-	<?php echo $a->name; ?><br />
-	<?php endforeach; ?>
+<!--
+	<?php if(count($images) > 0): ?>
+
+	<div class="row marketing">
+    	<div class="col-lg-12">
+    		<h4>Pictures</h4>
+       </div>
+  	</div>
+
+  	<?php for($i = 0; $i < count($images); $i++): ?>
+  		<?php if($i % 4 == 0): ?>
+  		<div class="row marketing">
+  		<?php endif; ?> 
+	
+    	<div class="col-lg-3">
+    		<a href="">
+    			<img src="<?php echo base_url() . '/media/' . $images[$i]->name; ?>" width="192" />
+			<a/>
+       </div>
+
+ 		<?php if($i % 4 == 3): ?>
+  		</div>
+  		<?php endif; ?> 
+	<?php endfor; ?>
+
 	<?php endif; ?>
-</body>
-</html>
+</div>
+-->

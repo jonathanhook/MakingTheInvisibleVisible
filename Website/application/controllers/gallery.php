@@ -6,7 +6,7 @@ class Gallery extends CI_Controller
 	{
 		if (!$this->ion_auth->logged_in())
 		{
-			redirect('auth/login');
+			redirect('login');
 		}
 
 		$this->load->model('media_model');
@@ -18,7 +18,12 @@ class Gallery extends CI_Controller
 					  'videos' => $videos,
 					  'audio' => $audio);
 
-		$this->load->view('gallery', $data);		
+		$header_data = array('selected' => 'gallery',
+						     'logged_in' => true);
+
+		$this->load->view('header', $header_data);
+		$this->load->view('gallery', $data);
+		$this->load->view('footer');
 	}
 
 }
