@@ -37,6 +37,11 @@ class Upload extends CI_Controller {
 
 				$this->media_model->create($name, $user_id, $type_id);
 			}
+			else
+			{
+				echo $this->upload->display_errors();
+			}
+
 		}
 
 		$this->load->view('upload');
