@@ -1,5 +1,5 @@
       <div class="footer">
-
+      	<a href="auth/change_password">Change your password</a>
       </div>
 
     </div> <!-- /container -->
