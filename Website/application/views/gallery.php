@@ -5,14 +5,6 @@
 
 	<?php if(count($images) > 0): ?>
 
-  <style>
-  .gallery-image
-  {
-    width:120px;
-    height:120px;
-    background-color: #c1c1c1;
-  }
-  </style>
 	<div class="row">
 	 <div class="col-md-12"><h4>Pictures</h4></div> 	
   </div>
@@ -21,8 +13,8 @@
     <?php for($i = 0; $i < count($images); $i++): ?>
 
       <div class="col-md-3">
-        <a href="<?php echo base_url() . '/media/' . $images[$i]->name; ?>" class="thumbnail">
-          <img src="<?php echo base_url() . '/media/' . $images[$i]->name; ?>" />
+        <a href="<?php echo base_url() . 'media/' . $images[$i]->name; ?>" class="thumbnail">
+          <img src="<?php echo base_url() . 'media/' . $images[$i]->name ?>" />
         </a>
       </div>
 

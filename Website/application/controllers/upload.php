@@ -15,6 +15,11 @@ class Upload extends CI_Controller {
 			redirect('login');
 		}
 
+		if (!$this->ion_auth->is_admin())
+		{
+			redirect('gallery');
+		}
+
 		if($this->input->post())
 		{
 			$config['upload_path'] = './media/';
