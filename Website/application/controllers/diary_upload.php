@@ -23,6 +23,7 @@ class Diary_Upload extends CI_Controller {
 		if($this->input->post())
 		{
 			$config['upload_path'] = './media/';
+			$config['max_size'] = '524288000';
 			$config['allowed_types'] = '*';
 
 			$this->load->library('upload', $config);
@@ -52,7 +53,6 @@ class Diary_Upload extends CI_Controller {
 			{
 				echo $this->upload->display_errors();
 			}
-
 		}
 
 		$this->load->model('user_model');
@@ -63,6 +63,10 @@ class Diary_Upload extends CI_Controller {
 		{
 			$options[$u->id] = $u->username;
 		}
+
+		echo 'post_max_size: ' . ini_get('post_max_size') . '<br />';
+		echo 'upload_max_filesize: ' . ini_get('upload_max_filesize') . '<br />';
+		echo 'memory_limit: ' . ini_get('memory_limit') . '<br />';
 
 		$data = array('options' => $options);
 		$this->load->view('diary_upload', $data);
