@@ -12,7 +12,7 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				<video id="<?php echo $v->id ?>;" controls preload="auto" width="100%" class="diary_video">
+				<video id="<?php echo $v->id ?>;" controls preload="auto" class="diary_video">
 					<source src="<?php echo base_url() . 'media/' . $v->name; ?>" />
 				</video>
 			</div>

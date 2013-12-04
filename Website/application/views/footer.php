@@ -1,5 +1,7 @@
       <div class="footer">
-      	<a href="auth/change_password">Change your password</a>
+      	<?php if($this->ion_auth->logged_in()): ?>
+      		<a href="auth/change_password">Change your password</a>
+      	<?php endif ?>
       </div>
 
     </div> <!-- /container -->

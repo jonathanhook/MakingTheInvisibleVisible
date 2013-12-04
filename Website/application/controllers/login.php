@@ -49,12 +49,10 @@ class Login extends CI_Controller {
 			}
 			else
 			{
-				$this->load->view('login/login', array('login_failed' => true));
+				$this->load->view('login', array('login_failed' => true));
 			}
 		}	
 
-		
-		$this->load->view('footer');
 	}
 }
 

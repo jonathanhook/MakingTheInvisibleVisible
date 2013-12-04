@@ -1,6 +1,7 @@
 <?php 
 
-class Diary_model extends CI_Model {
+class Diary_model extends CI_Model 
+{
 
 	private	$diary_table = 'diary';
 

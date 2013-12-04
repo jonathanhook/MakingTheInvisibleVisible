@@ -10,9 +10,10 @@ class Media_model extends CI_Model {
         parent::__construct();
     }
 
-    public function create($name, $user_id, $type)
+    public function create($name, $thumbnail, $user_id, $type)
     {
     	$data = array('name' => $name,
+                      'thumbnail' => $thumbnail,  
 					  'user_id' => $user_id,
 					  'type' => $type
 					  );
@@ -69,5 +70,15 @@ class Media_model extends CI_Model {
                     ->where('name', $type)
                     ->get()
                     ->row();
+    }
+
+    public function get_media_from_id($id)
+    {
+        return $this->db
+                   ->select()
+                   ->from($this->media_table)
+                   ->where('id', $id)
+                   ->get()
+                   ->row();
     }
 }

@@ -4,7 +4,13 @@
 
   <div>
     <div class="row" style="text-align:left; margin:auto; width:50%">
-      <!--<div class="span12">-->
+
+        <?php if(validation_errors() || isset($login_failed)): ?>
+          <?php if(isset($login_failed)): ?>
+            <p style="color: red;">Login details are incorrect, ensure you have entered them correctly.</p>
+          <?php endif;?>
+        <?php endif; ?>
+
         <?php if($this->session->flashdata('logged_out')): ?>
           You've been logged out
         <?php endif; ?>
@@ -41,22 +47,6 @@
           </div>
         <!--</fieldset>-->
         <?php echo form_close(); ?>
-
-        <?php if(validation_errors() || isset($login_failed)): ?>
-          <div class="alert alert-error">
-                <button type="button" class="close" data-dismiss="alert">x</button>
-                <p><strong>Oops: </strong> please re-enter your details correctly.<br></p>
-                <?php if(form_error('identity')): ?>
-                  <p><?php echo form_error('identity'); ?></p>
-              <?php endif; ?>
-              <?php if(form_error('password')): ?>
-                  <p><?php echo form_error('password'); ?></p>
-              <?php endif; ?>
-              <?php if(isset($login_failed)): ?>
-                <p>Login details are incorrect, ensure you have entered them correctly.</p>
-              <?php endif;?>
-          </div>
-        <?php endif; ?>
     </div>
   </div>
 </div>
