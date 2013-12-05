@@ -5,6 +5,8 @@
             picture.
         <?php elseif($media->type == 1): ?>
             video.
+        <?php elseif($media->type == 3): ?>
+            sound.
         <?php endif; ?>
     </p>
 </div>
@@ -19,15 +21,28 @@
     </video>
 <?php endif; ?>
 
+<?php if($media->type == 3): ?>
+    <audio id="<?php echo $media->id; ?>" controls class="discuss_media discuss_audio">
+        <source src="<?php echo base_url() . 'media/' . $media->name; ?>" type="audio/mpeg" />
+        Your browser does not support the audio element.
+    </audio>
+<?php endif; ?>
+
 <div class="comments_region">
     <div>
         <ul class="list-group">
             <?php foreach ($comments as $c): ?>
                 <li class="list-group-item">
-                    <?php echo $c->text; ?>
-                    <span class="badge">
-                        <?php echo $c->first_name; ?>
-                    </span>
+                    <div class="row">
+                        <div class="col-md-10">
+                            <?php echo $c->text; ?>
+                        </div>
+                        <div class="col-md-2">
+                            <span class="badge comments_name_badge pull-right">
+                                <?php echo $c->first_name; ?>
+                            </span>
+                        </div>
+                    </div>
                 </li>
             <?php endforeach; ?>
         </ul>

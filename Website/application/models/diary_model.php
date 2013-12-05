@@ -2,7 +2,6 @@
 
 class Diary_model extends CI_Model 
 {
-
 	private	$diary_table = 'diary';
 
     function __construct()
@@ -15,14 +14,13 @@ class Diary_model extends CI_Model
     	$data = array('name' => $name,
 					  'user_id' => $user_id,
 					  'type' => $type,
-                      'week' => $week
-					  );
+                      'week' => $week);
 
     	return $this->db
     		 		->insert($this->diary_table, $data);
     }
 
-    public function get_all_for_user($user_id)
+    public function get_all_from_user($user_id)
     {
     	return $this->db
     				->select()

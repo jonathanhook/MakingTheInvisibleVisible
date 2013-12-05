@@ -37,7 +37,7 @@ class Gallery extends CI_Controller
 		if($this->input->post() && $_FILES['userfile']['size'] > 0)
 		{
 			$config['upload_path'] = './media/';
-			$config['allowed_types'] = 'jpg|JPG|jpeg|JPEG|mp4';
+			$config['allowed_types'] = 'jpg|JPG|jpeg|JPEG|mp4|mp3';
 			$this->load->library('upload', $config);
 
 			if ($this->upload->do_upload())
@@ -62,7 +62,7 @@ class Gallery extends CI_Controller
 					$this->createThumbnail($name_path, $thumbnail_path, '320');
 					$this->media_model->create($name, $thumbnail, $user_id, $type_id);
 				}
-				else if($type == 'video')
+				else if($type == 'video' || $type == 'audio')
 				{
 					$this->load->model('media_model');
 					$type_id = $this->media_model->get_type($type);
@@ -80,22 +80,9 @@ class Gallery extends CI_Controller
 		$this->load->model('comments_model');
 		$this->load->model('media_model');
 
-		$images = $this->media_model->get_images();
-		foreach ($images as $i) 
-		{
-			$num_comments = $this->comments_model->get_num_comments($i->id);
-			$i->num_comments = $num_comments;
-		}
-
-		$videos = $this->media_model->get_videos();
-		foreach ($videos as $v) 
-		{
-			$num_comments = $this->comments_model->get_num_comments($v->id);
-			$v->num_comments = $num_comments;
-		}
-
-		$audio = $this->media_model->get_audio();
-		// get num comments for audio
+		$images = $this->media_model->get_media_from_type('image');
+		$videos = $this->media_model->get_media_from_type('video');
+		$audio = $this->media_model->get_media_from_type('audio');
 
 		$data = array('images' => $images,
 					  'videos' => $videos,

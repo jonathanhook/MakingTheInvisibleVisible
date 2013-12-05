@@ -14,7 +14,7 @@ class Diary extends CI_Controller
 
 		$this->load->model('diary_model');
 		$user_id = $this->ion_auth->user()->row()->id;
-		$videos = $this->diary_model->get_all_for_user($user_id);
+		$videos = $this->diary_model->get_all_from_user($user_id);
 
 		$data = array ('videos' => $videos);
 

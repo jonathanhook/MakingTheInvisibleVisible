@@ -5,7 +5,7 @@
     Use the button below to upload your own things to the gallery.
   </p>
   
-  <?php if($uploadErrors != '') echo '<div style="color: red;">' . $uploadErrors . '</div>'; ?> 
+  <?php if($uploadErrors != '') echo '<div class="gallery_upload_error">' . $uploadErrors . '</div>'; ?> 
 
   <div>
     <?php echo form_open_multipart('gallery/index');?>
@@ -31,7 +31,7 @@
       <div class="col-md-3">
         <a href="<?php echo base_url() . 'discuss_media?id=' . $images[$i]->id; ?>" class="thumbnail">
           <?php if($images[$i]->num_comments > 0): ?>
-            <span class="badge btn-primary" style="z-index=100; position:absolute; margin: 5px; background-color: #428bca;">
+            <span class="badge btn-primary gallery_comment_number_badge">
               <?php echo $images[$i]->num_comments; ?>
             </span>
           <?php endif; ?>
@@ -43,7 +43,7 @@
   </div>
 <?php endif; ?>
 
-<?php if(count($images) > 0): ?>
+<?php if(count($videos) > 0): ?>
 
   <div class="row">
    <div class="col-md-12"><h4>Videos</h4></div>   
@@ -55,13 +55,54 @@
       <div class="col-md-4">
         <a href="<?php echo base_url() . 'discuss_media?id=' . $videos[$i]->id; ?>" class="thumbnail">
           <?php if($videos[$i]->num_comments > 0): ?>
-            <span class="badge btn-primary" style="z-index=100; position:absolute; margin: 5px; background-color: #428bca;">
+            <span class="badge btn-primary gallery_comment_number_badge">
               <?php echo $videos[$i]->num_comments; ?>
             </span>
           <?php endif; ?>
           <video id="<?php echo $videos[$i]->id ?>;" preload="auto" width="100%">
             <source src="<?php echo base_url() . 'media/' . $videos[$i]->name; ?>" />
           </video>
+        </a>
+      </div>
+
+    <?php endfor; ?>
+  </div>
+
+<?php endif; ?>
+
+<?php if(count($audio) > 0): ?>
+
+  <div class="row">
+   <div class="col-md-12"><h4>Sounds</h4></div>   
+  </div>
+
+  <div class="row">
+    <?php for($i = 0; $i < count($audio); $i++): ?>
+
+      <div class="col-md-4">
+        <a href="<?php echo base_url() . 'discuss_media?id=' . $audio[$i]->id; ?>" class="thumbnail">
+
+              <?php if($audio[$i]->num_comments > 0): ?>
+                <span class="badge btn-primary pull-left gallery_audio_comment_number_badge">
+                  <?php echo $audio[$i]->num_comments; ?>
+                </span>
+              <?php endif; ?>
+
+              <span class="glyphicon glyphicon-music gallery_audio_icon" />
+              <span>
+                <?php
+                  $max_length = ($audio[$i]->num_comments > 0) ? 15 : 19;
+
+                  if(strlen($audio[$i]->name) > $max_length)
+                  {
+                      echo substr($audio[$i]->name, 0, $max_length) . '...'; 
+                  }
+                  else
+                  {
+                      echo $audio[$i]->name;
+                  }
+                ?>
+              </span>
         </a>
       </div>
 

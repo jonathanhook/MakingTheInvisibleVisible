@@ -42,7 +42,7 @@ class Discuss_Media extends CI_Controller
 			$media = $this->media_model->get_media_from_id($id);
 
 			$this->load->model('comments_model');
-			$comments = $this->comments_model->get_comments_form_media_id($id);			
+			$comments = $this->comments_model->get_comments_from_media_id($id);			
 
 			$header_data = array('selected' => 'gallery',
 								 'logged_in'=> true);

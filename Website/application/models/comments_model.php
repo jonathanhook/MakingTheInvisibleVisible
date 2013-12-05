@@ -2,7 +2,6 @@
 
 class Comments_model extends CI_Model 
 {
-
 	private	$comments_table = 'comments';
 
     function __construct()
@@ -20,10 +19,10 @@ class Comments_model extends CI_Model
     		 		->insert($this->comments_table, $data);
     }
 
-    public function get_comments_form_media_id($media_id)
+    public function get_comments_from_media_id($media_id)
     {
     	return $this->db
-    				->select('text, comments.created_on, first_name')
+    				->select('comments.text, comments.created_on, users.first_name, users.last_name')
     				->from($this->comments_table)
     				->join('users', 'users.id = comments.user_id')
     				->where('media_id', $media_id)
