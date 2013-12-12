@@ -19,6 +19,8 @@ class Comments_model extends CI_Model
     		 		->insert($this->comments_table, $data);
     }
 
+    
+
     public function get_comments_from_media_id($media_id)
     {
     	return $this->db

@@ -59,7 +59,7 @@
               <?php echo $videos[$i]->num_comments; ?>
             </span>
           <?php endif; ?>
-          <video id="<?php echo $videos[$i]->id ?>;" preload="auto" width="100%">
+          <video id="<?php echo $videos[$i]->id ?>;" preload="metadata" width="100%">
             <source src="<?php echo base_url() . 'media/' . $videos[$i]->name; ?>" />
           </video>
         </a>

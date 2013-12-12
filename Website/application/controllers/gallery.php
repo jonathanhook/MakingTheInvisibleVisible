@@ -37,7 +37,7 @@ class Gallery extends CI_Controller
 		if($this->input->post() && $_FILES['userfile']['size'] > 0)
 		{
 			$config['upload_path'] = './media/';
-			$config['allowed_types'] = 'jpg|JPG|jpeg|JPEG|mp4|mp3';
+			$config['allowed_types'] = 'jpg|JPG|jpeg|JPEG|mp4|mp3|MP3';
 			$this->load->library('upload', $config);
 
 			if ($this->upload->do_upload())
@@ -52,23 +52,23 @@ class Gallery extends CI_Controller
 				if($type == 'image' && $data['file_size'] <= 1000)
 				{
 					$this->load->model('media_model');
-					$type_id = $this->media_model->get_type($type);
-					$type_id = $type_id->id;
 
 					$thumbnail = 't_' . $name;
 					$name_path = './media/' . $name;
 					$thumbnail_path = './media/' . $thumbnail;
 
 					$this->createThumbnail($name_path, $thumbnail_path, '320');
-					$this->media_model->create($name, $thumbnail, $user_id, $type_id);
+					$this->media_model->create($name, $thumbnail, $user_id, '2');
 				}
-				else if($type == 'video' || $type == 'audio')
+				else if($type == 'video')
+				{					
+					$this->load->model('media_model');
+					$this->media_model->create($name, '', $user_id, '1');
+				}
+				else if($type == 'audio')
 				{
 					$this->load->model('media_model');
-					$type_id = $this->media_model->get_type($type);
-					$type_id = $type_id->id;
-
-					$this->media_model->create($name, '', $user_id, $type_id);
+					$this->media_model->create($name, '', $user_id, '3');
 				}
 			}
 			else

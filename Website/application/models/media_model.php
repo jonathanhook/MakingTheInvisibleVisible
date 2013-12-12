@@ -43,14 +43,18 @@ class Media_model extends CI_Model {
 
     public function get_media_from_type($type)
     {
-        $type_id = $this->get_type_id_from_name($type)->id;
+        $result = $this->get_type_id_from_name($type);
+        if(!is_array($result))
+        {
+            $type_id = $result->id;
 
-        return $this->db
-                    ->select('media.*, (SELECT COUNT(*) FROM comments WHERE comments.media_id = media.id) AS num_comments')
-                    ->from($this->media_table)
-                    ->where('type', $type_id)
-                    ->get()
-                    ->result();
+            return $this->db
+                        ->select('media.*, (SELECT COUNT(*) FROM comments WHERE comments.media_id = media.id) AS num_comments')
+                        ->from($this->media_table)
+                        ->where('type', $type_id)
+                        ->get()
+                        ->result();
+        }
     }
 
     public function get_media_from_id($id)
@@ -61,5 +65,16 @@ class Media_model extends CI_Model {
                     ->where('id', $id)
                     ->get()
                     ->row();
+    }
+
+    // move to type_model
+    public function get_type($type_name)
+    {
+        return $this->db
+                    ->select('id')
+                    ->from($this->type_table)
+                    ->where('name', $type_name)
+                    ->get()
+                    ->result();
     }
 }

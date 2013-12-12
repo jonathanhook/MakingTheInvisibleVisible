@@ -19,6 +19,15 @@ class User_model extends CI_Model {
     				->result();
     }
 
+    public function get_all_users_id_and_name()
+    {
+        return $this->db
+                    ->select('id, first_name')
+                    ->from($this->user_table)
+                    ->get()
+                    ->result();
+    }
+
 
     public function get_all_user_names()
     {

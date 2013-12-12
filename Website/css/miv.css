@@ -83,3 +83,29 @@
 {
 	width: 100%;
 }
+
+.words_formheading
+{
+	color: #CCCCCC;
+	font-weight: bolder;
+	font-size: 10pt;
+	margin-left: 5px;
+}
+
+.words_error
+{
+	color: red;
+}
+
+.words_title
+{
+	font-weight: bolder;
+	padding-bottom: 0px;
+}
+
+.words_name
+{
+	font-style: italic;
+}
+
+
