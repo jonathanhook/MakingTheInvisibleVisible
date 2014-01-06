@@ -38,15 +38,11 @@ class Diary_Upload extends CI_Controller {
 
 				if($type == 'video')
 				{
-					$this->load->model('media_model');
-					$type_id = $this->media_model->get_type($type);
-					$type_id = $type_id->id;
-
 					$user_id = $this->input->post('user_name');
 					$week = $this->input->post('week');
 
 					$this->load->model('diary_model');
-					$this->diary_model->create($name, $user_id, $type_id, $week);
+					$this->diary_model->create($name, $user_id, '1', $week);
 				}
 			}
 			else
