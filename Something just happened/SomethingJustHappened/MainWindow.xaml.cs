@@ -25,62 +25,26 @@ namespace SomethingJustHappened
             InitializeComponent();
 
             List<EncoderDevice> videoDevices = DeviceFinder.GetVideoDevices();
-            foreach(EncoderDevice d in videoDevices)
-            {
-                VideoDevices.Items.Add(d.Name);
-            }
-            VideoDevices.SelectedIndex = 0;
-
             List<EncoderDevice> audioDevices = DeviceFinder.GetAudioDevices();
-            foreach(EncoderDevice d in audioDevices)
-            {
-                AudioDevices.Items.Add(d.Name);
-            }
-            AudioDevices.SelectedIndex = 0;
 
-            camera = new SomethingJustHappenedCamera(videoDevices[0], audioDevices[0], Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), TimeSpan.FromSeconds(3)); 
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            camera.Click();
-        }
-
-        private void StartButton_Click(object sender, RoutedEventArgs e)
-        {
-            StartButton.IsEnabled = false;
-            StopButton.IsEnabled = true;
-            VideoDevices.IsEnabled = false;
-            AudioDevices.IsEnabled = false;
-            ClickButton.IsEnabled = true;
-            
+            camera = new SomethingJustHappenedCamera(videoDevices[0], audioDevices[0], Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), TimeSpan.FromSeconds(3));
             camera.Start();
         }
 
-        private void StopButton_Click(object sender, RoutedEventArgs e)
+        private void Window_KeyDown_1(object sender, KeyEventArgs e)
         {
-            StartButton.IsEnabled = true;
-            StopButton.IsEnabled = true;
-            VideoDevices.IsEnabled = true;
-            AudioDevices.IsEnabled = true;
-            ClickButton.IsEnabled = false;
-
-            camera.Stop();
+            if (e.Key == Key.Escape)
+            {
+                camera.Stop();
+                this.Close();
+            }
         }
 
-        private void ClickButton_Click(object sender, RoutedEventArgs e)
+        private void Window_MouseDown_1(object sender, MouseButtonEventArgs e)
         {
+            ClickedLabel.Visibility = Visibility.Visible;
             camera.Click();
-        }
-
-        private void VideoDevices_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        private void AudioDevices_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //throw new NotImplementedException();
+            ClickedLabel.Visibility = Visibility.Collapsed;
         }
     }
 }

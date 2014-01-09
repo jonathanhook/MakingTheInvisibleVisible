@@ -33,6 +33,7 @@ namespace SomethingJustHappened
             pInfo.UseShellExecute = false;
             pInfo.RedirectStandardOutput = true;
             pInfo.RedirectStandardError = true;
+            pInfo.CreateNoWindow = true;
 
             Process p = new Process();
             p.StartInfo = pInfo;
@@ -68,6 +69,8 @@ namespace SomethingJustHappened
             pInfo.Arguments = string.Format("-i {0}", video);
             pInfo.UseShellExecute = false;
             pInfo.RedirectStandardError = true;
+            pInfo.CreateNoWindow = true;
+
 
             Process p = new Process();
             p.StartInfo = pInfo;
