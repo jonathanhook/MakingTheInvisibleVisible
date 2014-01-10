@@ -28,5 +28,19 @@ namespace SomethingJustHappened
             }
             else return new List<EncoderDevice>();
         }
+
+        public static int FindDeviceByName(string name, List<EncoderDevice> devices)
+        {
+            for (int i = 0; i < devices.Count; i++)
+            {
+                EncoderDevice d = devices[i];
+                if (d.Name == name)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
     }
 }

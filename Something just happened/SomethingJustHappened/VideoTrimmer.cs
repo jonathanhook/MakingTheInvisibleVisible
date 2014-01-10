@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11,21 +12,28 @@ namespace SomethingJustHappened
     public static class VideoTrimmer
     {
         private const string FFMPEG = "ffmpeg.exe";
+        private const string MENCODER = "mencoder.exe";
 
         public static void TrimVideo(string input, string output, TimeSpan clipDuration)
         {
             TimeSpan sourceDuration = GetVideoDuration(input);
             TimeSpan start = TimeSpan.FromSeconds(0);
-
+            
             if (clipDuration < sourceDuration)
             {
                 start = sourceDuration - clipDuration;
                 start = new TimeSpan(start.Hours, start.Minutes, start.Seconds);
             }
+            else
+            {
+                clipDuration = sourceDuration;
+            }
 
-            string args = string.Format("-i \"{0}\" -ss {1} -y \"{2}\"", input, start, output);
+            string args = string.Format("-i {0} -ss {1} -t {2} -y {3}", input, start, clipDuration, output);
 
+            Console.WriteLine();
             Console.WriteLine(args);
+            Console.WriteLine();
 
             ProcessStartInfo pInfo = new ProcessStartInfo();
             pInfo.FileName = FFMPEG;
@@ -37,29 +45,19 @@ namespace SomethingJustHappened
 
             Process p = new Process();
             p.StartInfo = pInfo;
-            p.OutputDataReceived += p_OutputDataReceived;
-            p.ErrorDataReceived += p_ErrorDataReceived;
             p.Start();
-            p.BeginOutputReadLine();
-            p.BeginErrorReadLine();
-        }
+            p.WaitForExit();
 
-        private static void p_ErrorDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            if (e.Data != null)
-            {
-                Console.Write("ERROR:\t");
-                Console.WriteLine(e.Data);
-            }
-        }
+            string errorStr = p.StandardError.ReadToEnd();
+            string outputStr = p.StandardOutput.ReadToEnd();
 
-        private static void p_OutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            if (e.Data != null)
+            if (errorStr.Length > 0)
             {
-                Console.Write("STD-OUT:\t");
-                Console.WriteLine(e.Data);
+                Console.WriteLine("ERROR");
+                Console.WriteLine(errorStr);
             }
+
+            Console.WriteLine(outputStr);
         }
 
         private static TimeSpan GetVideoDuration(string video)
@@ -70,7 +68,6 @@ namespace SomethingJustHappened
             pInfo.UseShellExecute = false;
             pInfo.RedirectStandardError = true;
             pInfo.CreateNoWindow = true;
-
 
             Process p = new Process();
             p.StartInfo = pInfo;

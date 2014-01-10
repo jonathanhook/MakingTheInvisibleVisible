@@ -5,5 +5,11 @@
     <Setting Name="DefaultClipLength" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:00:30</Value>
     </Setting>
+    <Setting Name="DefaultAudioDevice" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="DefaultVideoDevice" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -54,9 +54,11 @@ namespace SomethingJustHappened
 
                     string clickPath = GetClickFilePath();
                     File.Copy(camera.CurrentVideoPath, clickPath);
-                    File.Delete(camera.CurrentVideoPath);
 
-                    VideoTrimmer.TrimVideo(clickPath, clickPath, ClipLength); 
+                    VideoTrimmer.TrimVideo(clickPath, clickPath.Replace("wmv", "avi"), ClipLength);
+
+                    File.Delete(camera.CurrentVideoPath);
+                    File.Delete(clickPath);
 
                     camera.StartRecording(path, TEMP_FILENAME);
                 }
@@ -65,7 +67,7 @@ namespace SomethingJustHappened
             }
         }
 
-        private string GetClickFilePath()
+        private string GetClickFilePath(string optional = "")
         {
             string startString = StartTime.ToString();
             startString = startString.Replace(':', '-');
@@ -74,7 +76,7 @@ namespace SomethingJustHappened
 
             TimeSpan elapsed = DateTime.UtcNow - StartTime;
             string filename = string.Format(CLIP_FILENAME, startString, (int)elapsed.TotalSeconds);
-            return Path.Combine(path, filename);
+            return Path.Combine(path, (optional + filename));
         }
     }
 }

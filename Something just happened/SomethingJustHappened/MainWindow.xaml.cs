@@ -19,32 +19,106 @@ namespace SomethingJustHappened
     public partial class MainWindow : Window
     {
         private SomethingJustHappenedCamera camera;
+        private List<EncoderDevice> videoDevices;
+        private List<EncoderDevice> audioDevices;
+        private int currentVideoDevice;
+        private int currentAudioDevice;
+        private bool running;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            List<EncoderDevice> videoDevices = DeviceFinder.GetVideoDevices();
-            List<EncoderDevice> audioDevices = DeviceFinder.GetAudioDevices();
+            videoDevices = DeviceFinder.GetVideoDevices();
+            audioDevices = DeviceFinder.GetAudioDevices();
 
-            camera = new SomethingJustHappenedCamera(videoDevices[0], audioDevices[0], Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), TimeSpan.FromSeconds(3));
-            camera.Start();
+            if (videoDevices.Count > 0 && audioDevices.Count > 0)
+            {
+                string defaultVideoName = Properties.Settings.Default.DefaultVideoDevice;
+                string defaultAudioName = Properties.Settings.Default.DefaultAudioDevice;
+
+                currentVideoDevice = DeviceFinder.FindDeviceByName(defaultVideoName, videoDevices);
+                currentAudioDevice = DeviceFinder.FindDeviceByName(defaultAudioName, audioDevices);
+
+                if (currentVideoDevice < 0)
+                {
+                    currentVideoDevice = 0;
+                }
+
+                if (currentAudioDevice < 0)
+                {
+                    currentAudioDevice = 0;
+                }
+
+                AudioDeviceLabel.Content = audioDevices[currentAudioDevice].Name;
+                VideoDeviceLabel.Content = videoDevices[currentVideoDevice].Name;
+
+                running = false;
+            }
+            else
+            {
+                MessageBox.Show("No audio and video devices available");
+            }
         }
 
         private void Window_KeyDown_1(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
-                camera.Stop();
+                if (running)
+                {
+                    camera.Stop();
+                }
+
                 this.Close();
+            }
+            else if (e.Key == Key.V)
+            {
+                currentVideoDevice = (currentVideoDevice + 1) % videoDevices.Count;
+                string name = videoDevices[currentVideoDevice].Name;
+
+           
+                VideoDeviceLabel.Content = name;
+                Properties.Settings.Default.DefaultVideoDevice = name;
+                Properties.Settings.Default.Save();
+            }
+            else if (e.Key == Key.A)
+            {
+                currentAudioDevice = (currentAudioDevice + 1) % audioDevices.Count;
+                string name = audioDevices[currentAudioDevice].Name;
+
+                AudioDeviceLabel.Content = name;
+                Properties.Settings.Default.DefaultAudioDevice = name;
+                Properties.Settings.Default.Save();
+            }
+            else if(e.Key == Key.Space)
+            {
+                if (!running)
+                {
+                    camera = new SomethingJustHappenedCamera(videoDevices[currentVideoDevice], audioDevices[currentAudioDevice], Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), Properties.Settings.Default.DefaultClipLength);
+                    camera.Start();
+                    RecordingLabel.Visibility = Visibility.Visible;
+
+                    running = true;
+                }
+                else
+                {
+                    RecordingLabel.Visibility = Visibility.Hidden;
+                    camera.Stop();
+
+                    running = false;
+                }
             }
         }
 
         private void Window_MouseDown_1(object sender, MouseButtonEventArgs e)
         {
-            ClickedLabel.Visibility = Visibility.Visible;
-            camera.Click();
-            ClickedLabel.Visibility = Visibility.Collapsed;
+            if (running)
+            {
+                ClickedLabel.Visibility = Visibility.Visible;
+                camera.Click();
+                ClickedLabel.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }

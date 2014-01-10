@@ -34,5 +34,29 @@ namespace SomethingJustHappened.Properties {
                 this["DefaultClipLength"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string DefaultAudioDevice {
+            get {
+                return ((string)(this["DefaultAudioDevice"]));
+            }
+            set {
+                this["DefaultAudioDevice"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string DefaultVideoDevice {
+            get {
+                return ((string)(this["DefaultVideoDevice"]));
+            }
+            set {
+                this["DefaultVideoDevice"] = value;
+            }
+        }
     }
 }
