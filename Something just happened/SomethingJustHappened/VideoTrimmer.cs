@@ -11,8 +11,10 @@ namespace SomethingJustHappened
 {
     public static class VideoTrimmer
     {
+        public delegate void ProcessorOutputEventHandler(string message);
+        public static event ProcessorOutputEventHandler ProcessorOutputEvent;
+
         private const string FFMPEG = "ffmpeg.exe";
-        private const string MENCODER = "mencoder.exe";
 
         public static void TrimVideo(string input, string output, TimeSpan clipDuration)
         {
@@ -38,16 +40,17 @@ namespace SomethingJustHappened
             ProcessStartInfo pInfo = new ProcessStartInfo();
             pInfo.FileName = FFMPEG;
             pInfo.Arguments = args;
-            pInfo.UseShellExecute = false;
-            pInfo.RedirectStandardOutput = true;
-            pInfo.RedirectStandardError = true;
-            pInfo.CreateNoWindow = true;
+            //pInfo.UseShellExecute = false;
+            //pInfo.RedirectStandardOutput = true;
+            //pInfo.RedirectStandardError = true;
+            //pInfo.CreateNoWindow = true;
 
             Process p = new Process();
             p.StartInfo = pInfo;
             p.Start();
             p.WaitForExit();
 
+            /*
             string errorStr = p.StandardError.ReadToEnd();
             string outputStr = p.StandardOutput.ReadToEnd();
 
@@ -57,7 +60,7 @@ namespace SomethingJustHappened
                 Console.WriteLine(errorStr);
             }
 
-            Console.WriteLine(outputStr);
+            Console.WriteLine(outputStr);*/
         }
 
         private static TimeSpan GetVideoDuration(string video)

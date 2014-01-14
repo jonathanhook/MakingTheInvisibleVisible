@@ -58,5 +58,17 @@ namespace SomethingJustHappened.Properties {
                 this["DefaultVideoDevice"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("SomethingJustHappened")]
+        public string DataFolder {
+            get {
+                return ((string)(this["DataFolder"]));
+            }
+            set {
+                this["DataFolder"] = value;
+            }
+        }
     }
 }

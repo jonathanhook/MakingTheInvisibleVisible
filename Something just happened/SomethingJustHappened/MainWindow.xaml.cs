@@ -59,6 +59,16 @@ namespace SomethingJustHappened
             {
                 MessageBox.Show("No audio and video devices available");
             }
+
+            SomethingJustHappenedCamera.ProcessorOutputEvent += SomethingJustHappenedCamera_ProcessorOutputEvent;
+        }
+
+        private void SomethingJustHappenedCamera_ProcessorOutputEvent(object sender, string message)
+        {
+            Dispatcher.Invoke(new Action(() =>
+            {
+                ProcessorLabel.Content = message;
+            }));   
         }
 
         private void Window_KeyDown_1(object sender, KeyEventArgs e)
@@ -95,7 +105,9 @@ namespace SomethingJustHappened
             {
                 if (!running)
                 {
-                    camera = new SomethingJustHappenedCamera(videoDevices[currentVideoDevice], audioDevices[currentAudioDevice], Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), Properties.Settings.Default.DefaultClipLength);
+                    string path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos), Properties.Settings.Default.DataFolder);
+
+                    camera = new SomethingJustHappenedCamera(videoDevices[currentVideoDevice], audioDevices[currentAudioDevice], path, Properties.Settings.Default.DefaultClipLength);
                     camera.Start();
                     RecordingLabel.Visibility = Visibility.Visible;
 

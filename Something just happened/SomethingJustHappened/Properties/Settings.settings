@@ -11,5 +11,8 @@
     <Setting Name="DefaultVideoDevice" Type="System.String" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="DataFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SomethingJustHappened</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

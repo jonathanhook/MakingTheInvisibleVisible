@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
@@ -11,15 +12,19 @@ namespace SomethingJustHappened
 {
     class SomethingJustHappenedCamera
     {
-        private const string CLIP_FILENAME = "{0}_{1}.wmv";
-        private const string TEMP_FILENAME = "temp.wmv";
+        public delegate void ProcessorOutputEventHandler(object sender, string message);
+        public static event ProcessorOutputEventHandler ProcessorOutputEvent;
 
-        public DateTime StartTime { get; private set; }
+        private const string CLIP_FORMAT = "click_{0}.avi";
+        private const string SEGMENT_FORMAT = "segment_{0}.wmv";
+
         public TimeSpan ClipLength { get; set; }
 
         private CameraCapture camera;
         private string path;
+        private string folder;
         private bool processingClick;
+        private int segmentCount;
 
         public SomethingJustHappenedCamera(EncoderDevice video, EncoderDevice audio, string path, TimeSpan clipLength)
         {
@@ -27,19 +32,38 @@ namespace SomethingJustHappened
             this.ClipLength = clipLength;
 
             processingClick = false;
+            segmentCount = 0;
+
+            folder = EscapePath(DateTime.UtcNow.ToString());
+            this.path = Path.Combine(path, folder);
+
+            if (!Directory.Exists(this.path))
+            {
+                Directory.CreateDirectory(this.path);
+            }
+
             camera = new CameraCapture(video, audio);
+
+            //VideoTrimmer.ProcessorOutputEvent += VideoTrimmer_ProcessorOutputEvent;
+        }
+
+        private void VideoTrimmer_ProcessorOutputEvent(string message)
+        {
+            if (ProcessorOutputEvent != null)
+            {
+                ProcessorOutputEvent(this, message);
+            }
         }
 
         public void Start()
         {
-            camera.StartRecording(path, TEMP_FILENAME);
-            StartTime = DateTime.UtcNow;
+            string filename = string.Format(SEGMENT_FORMAT, segmentCount);
+            camera.StartRecording(path, filename);
         }
 
         public void Stop()
         {
             camera.StopRecording();
-            File.Delete(camera.CurrentVideoPath);
         }
 
         public void Click()
@@ -52,31 +76,33 @@ namespace SomethingJustHappened
                 {
                     camera.StopRecording();
 
-                    string clickPath = GetClickFilePath();
-                    File.Copy(camera.CurrentVideoPath, clickPath);
+                    int clickSegmentNumber = segmentCount;
+                    string segmentPath = camera.CurrentVideoPath;
 
-                    VideoTrimmer.TrimVideo(clickPath, clickPath.Replace("wmv", "avi"), ClipLength);
+                    Thread t = new Thread(() =>
+                    {
+                        string clickFilename = string.Format(CLIP_FORMAT, clickSegmentNumber);
+                        string clickFilePath = Path.Combine(path, clickFilename);
+                        VideoTrimmer.TrimVideo(segmentPath, clickFilePath, ClipLength);
+                    });
+                    t.Start();
 
-                    File.Delete(camera.CurrentVideoPath);
-                    File.Delete(clickPath);
-
-                    camera.StartRecording(path, TEMP_FILENAME);
+                    string filename = string.Format(SEGMENT_FORMAT, ++segmentCount);
+                    camera.StartRecording(path, filename);
                 }
 
                 processingClick = false;
             }
         }
 
-        private string GetClickFilePath(string optional = "")
+        private string EscapePath(string path)
         {
-            string startString = StartTime.ToString();
-            startString = startString.Replace(':', '-');
-            startString = startString.Replace('/', '-');
-            startString = startString.Replace(' ', '_');
+            string escPath = path;
+            escPath = escPath.Replace(':', '-');
+            escPath = escPath.Replace('/', '-');
+            escPath = escPath.Replace(' ', '_');
 
-            TimeSpan elapsed = DateTime.UtcNow - StartTime;
-            string filename = string.Format(CLIP_FILENAME, startString, (int)elapsed.TotalSeconds);
-            return Path.Combine(path, (optional + filename));
+            return escPath;
         }
     }
 }
