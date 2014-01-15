@@ -52,6 +52,7 @@ class Media_model extends CI_Model {
                         ->select('media.*, (SELECT COUNT(*) FROM comments WHERE comments.media_id = media.id) AS num_comments')
                         ->from($this->media_table)
                         ->where('type', $type_id)
+                        ->order_by('created_on', 'desc')
                         ->get()
                         ->result();
         }

@@ -34,7 +34,7 @@ class Gallery extends CI_Controller
 		}
 
 		$uploadErrors = '';
-		if($this->input->post() && $_FILES['userfile']['size'] > 0)
+		if($this->input->post() && isset($_FILES['userfile']) && $_FILES['userfile']['size'] > 0)
 		{
 			$config['upload_path'] = './media/';
 			$config['allowed_types'] = 'jpg|JPG|jpeg|JPEG|mp4|mp3|MP3';
@@ -77,6 +77,25 @@ class Gallery extends CI_Controller
 			}
 		}
 
+		$pagination = 12;
+		$num_pictures = $pagination;
+		if(isset($_POST['num_pictures']))
+		{
+			$num_pictures = $_POST['num_pictures'];
+		}
+
+		$num_videos = $pagination;
+		if(isset($_POST['num_videos']))
+		{
+			$num_videos = $_POST['num_videos'];
+		}
+
+		$num_sounds = $pagination;
+		if(isset($_POST['num_sounds']))
+		{
+			$num_sounds = $_POST['num_sounds'];
+		}
+
 		$this->load->model('comments_model');
 		$this->load->model('media_model');
 
@@ -84,10 +103,16 @@ class Gallery extends CI_Controller
 		$videos = $this->media_model->get_media_from_type('video');
 		$audio = $this->media_model->get_media_from_type('audio');
 
+		
+
 		$data = array('images' => $images,
 					  'videos' => $videos,
 					  'audio' => $audio,
-					  'uploadErrors' => $uploadErrors);
+					  'uploadErrors' => $uploadErrors,
+					  'num_pictures' => $num_pictures,
+					  'num_videos' => $num_videos,
+					  'num_sounds' => $num_sounds,
+					  'pagination' => $pagination);
 
 		$header_data = array('selected' => 'gallery',
 						     'logged_in' => true);

@@ -39,6 +39,20 @@
         </a>
       </div>
 
+      <?php if($i >= $num_pictures - 1): ?>
+        
+  </div>
+  <div class="row text-center">
+    <div class="col-md-12">
+      <?php echo form_open_multipart('gallery/index');?>
+      <?php echo form_hidden('num_pictures', $num_pictures + $pagination); ?>
+      <?php echo form_submit('more', 'See more', 'class="btn btn-default"'); ?>
+      <?php echo form_close(); ?>
+    </div>
+
+        <?php break; ?>
+      <?php endif; ?>
+
     <?php endfor; ?>
   </div>
 <?php endif; ?>
@@ -64,6 +78,20 @@
           </video>
         </a>
       </div>
+
+      <?php if($i >= $num_videos - 1): ?>
+        
+  </div>
+  <div class="row text-center">
+    <div class="col-md-12">
+      <?php echo form_open_multipart('gallery/index');?>
+      <?php echo form_hidden('num_videos', $num_videos + $pagination); ?>
+      <?php echo form_submit('more', 'See more', 'class="btn btn-default"'); ?>
+      <?php echo form_close(); ?>
+    </div>
+
+        <?php break; ?>
+      <?php endif; ?>
 
     <?php endfor; ?>
   </div>
@@ -105,6 +133,20 @@
               </span>
         </a>
       </div>
+
+      <?php if($i >= $num_sounds - 1): ?>
+
+        </div>
+  <div class="row text-center">
+    <div class="col-md-12">
+      <?php echo form_open_multipart('gallery/index');?>
+      <?php echo form_hidden('num_sounds', $num_sounds + $pagination); ?>
+      <?php echo form_submit('more', 'See more', 'class="btn btn-default"'); ?>
+      <?php echo form_close(); ?>
+    </div>
+
+        <?php break; ?>
+      <?php endif; ?>
 
     <?php endfor; ?>
   </div>
