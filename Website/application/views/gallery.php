@@ -28,19 +28,24 @@
   <div class="row">
     <?php for($i = 0; $i < count($images); $i++): ?>
 
-      <div class="col-md-3">
-        <a href="<?php echo base_url() . 'discuss_media?id=' . $images[$i]->id; ?>" class="thumbnail">
-          <?php if($images[$i]->num_comments > 0): ?>
-            <span class="badge btn-primary gallery_comment_number_badge">
-              <?php echo $images[$i]->num_comments; ?>
-            </span>
-          <?php endif; ?>
-          <img src="<?php echo base_url() . 'media/' . $images[$i]->thumbnail; ?>" />
-        </a>
-      </div>
+    <?php if($i % 4 == 0): ?>
+      <div class="row">
+    <?php endif; ?>
+
+        <div class="col-md-3">
+          <a href="<?php echo base_url() . 'discuss_media?id=' . $images[$i]->id; ?>" class="thumbnail">
+            <?php if($images[$i]->num_comments > 0): ?>
+              <span class="badge btn-primary gallery_comment_number_badge">
+                <?php echo $images[$i]->num_comments; ?>
+              </span>
+            <?php endif; ?>
+            <img src="<?php echo base_url() . 'media/' . $images[$i]->thumbnail; ?>" />
+          </a>
+        </div>
 
       <?php if($i >= $num_pictures - 1): ?>
         
+  </div>
   </div>
   <div class="row text-center">
     <div class="col-md-12">
@@ -51,8 +56,12 @@
     </div>
 
         <?php break; ?>
+
       <?php endif; ?>
 
+      <?php if($i % 4 == 3): ?>
+        </div>
+      <?php endif; ?>
     <?php endfor; ?>
   </div>
 <?php endif; ?>
