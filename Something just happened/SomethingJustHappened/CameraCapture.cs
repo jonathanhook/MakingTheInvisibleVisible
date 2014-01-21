@@ -11,6 +11,7 @@ using System.Diagnostics;
 using Microsoft.Expression.Encoder.Devices;
 using Microsoft.Expression.Encoder.Live;
 using Microsoft.Expression.Encoder;
+using Microsoft.Expression.Encoder.Profiles;
 
 namespace SomethingJustHappened
 {
@@ -35,7 +36,18 @@ namespace SomethingJustHappened
             job = new LiveJob();
             dvs = job.AddDeviceSource(Video, Audio);
             job.ActivateSource(dvs);
-            job.ApplyPreset(LivePresets.VC1HighSpeedBroadband16x9);
+
+            WindowsMediaOutputFormat outputFormat = new WindowsMediaOutputFormat();
+            AdvancedVC1VideoProfile profile = new AdvancedVC1VideoProfile();
+            profile.Bitrate = new ConstantBitrate(1280, false);
+            profile.Size = new System.Drawing.Size(640, 360);
+
+            WmaAudioProfile audioProfile = new WmaAudioProfile();
+
+            outputFormat.AudioProfile = audioProfile;
+            outputFormat.VideoProfile = profile;
+            job.OutputFormat = outputFormat;
+            
 
             CurrentVideoPath = Path.Combine(path, name);
 

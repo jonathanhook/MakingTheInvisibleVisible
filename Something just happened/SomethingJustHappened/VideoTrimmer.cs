@@ -31,7 +31,7 @@ namespace SomethingJustHappened
                 clipDuration = sourceDuration;
             }
 
-            string args = string.Format("-i {0} -ss {1} -t {2} -y {3}", input, start, clipDuration, output);
+            string args = string.Format("-i {0} -ss {1} -t {2} -y -b:v 1M {3}", input, start, clipDuration, output);
 
             Console.WriteLine();
             Console.WriteLine(args);
@@ -41,26 +41,12 @@ namespace SomethingJustHappened
             pInfo.FileName = FFMPEG;
             pInfo.Arguments = args;
             pInfo.UseShellExecute = false;
-            //pInfo.RedirectStandardOutput = true;
-            //pInfo.RedirectStandardError = true;
             pInfo.CreateNoWindow = true;
 
             Process p = new Process();
             p.StartInfo = pInfo;
             p.Start();
             p.WaitForExit();
-
-            /*
-            string errorStr = p.StandardError.ReadToEnd();
-            string outputStr = p.StandardOutput.ReadToEnd();
-
-            if (errorStr.Length > 0)
-            {
-                Console.WriteLine("ERROR");
-                Console.WriteLine(errorStr);
-            }
-
-            Console.WriteLine(outputStr);*/
         }
 
         private static TimeSpan GetVideoDuration(string video)
