@@ -5,7 +5,8 @@
         KeyUp="Window_KeyDown_1"
         MouseDown="Window_MouseDown_1"
         WindowState="Maximized"
-        WindowStyle="None">
+        WindowStyle="None"
+        Topmost="True">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />

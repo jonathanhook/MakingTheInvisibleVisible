@@ -35,7 +35,7 @@ namespace SomethingJustHappened
             job = new LiveJob();
             dvs = job.AddDeviceSource(Video, Audio);
             job.ActivateSource(dvs);
-            job.ApplyPreset(LivePresets.VC1HighSpeedBroadband4x3);
+            job.ApplyPreset(LivePresets.VC1HighSpeedBroadband16x9);
 
             CurrentVideoPath = Path.Combine(path, name);
 

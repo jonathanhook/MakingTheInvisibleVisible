@@ -40,10 +40,10 @@ namespace SomethingJustHappened
             ProcessStartInfo pInfo = new ProcessStartInfo();
             pInfo.FileName = FFMPEG;
             pInfo.Arguments = args;
-            //pInfo.UseShellExecute = false;
+            pInfo.UseShellExecute = false;
             //pInfo.RedirectStandardOutput = true;
             //pInfo.RedirectStandardError = true;
-            //pInfo.CreateNoWindow = true;
+            pInfo.CreateNoWindow = true;
 
             Process p = new Process();
             p.StartInfo = pInfo;
