@@ -19,18 +19,34 @@ class Add_Words extends CI_Controller
 		$text = '';
 		$error = '';
 		$document_id = '';
+		$isUpload = false;
 		
 		if($this->input->post())
 		{
 			$title = $this->input->post('title');
 			$text = $this->input->post('text');
+			
+			if(isset($_FILES['userfile']) && $_FILES['userfile']['size'] > 0)
+			{
+				$config['upload_path'] = './media/';
+				$config['allowed_types'] = 'pdf|PDF';
+				$this->load->library('upload', $config);
 
-			if($title != '' && $text != '')
+				if ($this->upload->do_upload())
+				{
+					$data = $this->upload->data();
+					$name = $data['file_name'];
+					$text = $name;
+				}
+
+				$isUpload = true;
+			}
+
+			if(($title != '' && $text != '') || ($title != ''  && $isUpload))
 			{
 				if(isset($_POST['author']))
 				{
 					$user_id = $this->input->post('author');
-					echo $user_id;
 				}
 				else
 				{
@@ -54,7 +70,7 @@ class Add_Words extends CI_Controller
 			}
 			else
 			{
-				$error = "Please enter a title and some words before you save.";
+				$error = "Please enter a title and some words or a scan before you save.";
 			}
 		}
 
@@ -72,7 +88,7 @@ class Add_Words extends CI_Controller
 		$hidden = array('id' => $document_id);
 
 		$data = array('title' => $title,
-					  'text' => $text,
+					  'text' => $isUpload ? '' : $text,
 					  'error' => $error,
 					  'admin' => $this->ion_auth->is_admin(),
 					  'users' => $users,

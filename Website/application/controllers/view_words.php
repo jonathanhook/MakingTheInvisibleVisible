@@ -25,6 +25,11 @@ class View_Words extends CI_Controller
 			$this->load->model('words_model');
 			$words = $this->words_model->get($id);
 
+			if(substr($words->text, -strlen('pdf')) === 'pdf')
+			{
+				redirect(base_url() . 'media/' . $words->text);
+			}
+
 			$header_data = array('selected' => 'words',
 								 'logged_in'=> true);
 
