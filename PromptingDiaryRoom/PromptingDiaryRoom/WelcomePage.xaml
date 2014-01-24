@@ -1,0 +1,34 @@
+﻿<Page x:Class="PromptingDiaryRoom.WelcomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="800"
+	  Title="WelcomePage">
+
+    <Grid>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" HorizontalAlignment="Center" Margin="25" FontSize="36">
+                The Diary Room 2.0
+            </Label>
+            <TextBlock Grid.Row="1" TextWrapping="WrapWithOverflow" Margin="25, 25, 25, 0" FontSize="18" TextAlignment="Center" Width="600">
+                This app will show you some of the pictures and videos that we've captured during the workshop series.
+                Above each item, there will be a quick question that we'd like you to answer.
+                Just speak the answer to the question and it will be audio recorded by the app.
+            </TextBlock>
+            <Label Grid.Row="2" Margin="25, 25, 25, 0" FontSize="18" HorizontalAlignment="Center">
+                Press start when you are ready to enter the diary room.
+            </Label>
+            <Button Grid.Row="3" HorizontalAlignment="Center" Padding="10" Margin="25" Click="Button_Click_1" FontSize="16">
+                Start
+            </Button>
+        </Grid>
+    </Grid>
+</Page>
