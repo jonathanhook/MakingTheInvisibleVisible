@@ -16,6 +16,7 @@ namespace PromptingDiaryRoom
         public int Max { get; private set; }
         public DateTime Started { get; private set; }
         public string SessionName { get; private set; }
+        public List<string> Questions { get; private set; }
 
         private Random rand;
 
@@ -32,6 +33,7 @@ namespace PromptingDiaryRoom
             rand = new Random(DateTime.UtcNow.Hour);
 
             OutputPath = Path.Combine(OutputPath, SessionName);
+            ParseQuestionFile();
         }
 
         public string GetRandom()
@@ -46,6 +48,14 @@ namespace PromptingDiaryRoom
             {
                 return "";
             }
+        }
+
+        public string GetRandomQuestion(string mediaType)
+        {
+            int index = rand.Next(Questions.Count());
+            string question = Questions.ElementAt(index);
+
+            return string.Format(question, mediaType);
         }
 
         public bool View(string item)
@@ -73,5 +83,15 @@ namespace PromptingDiaryRoom
             return escPath;
         }
 
+        private void ParseQuestionFile()
+        {
+            Questions = new List<string>();
+
+            string[] lines = File.ReadAllLines("Questions.txt");
+            foreach (string l in lines)
+            {
+                Questions.Add(l);
+            }
+        }
     }
 }

@@ -15,15 +15,15 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" HorizontalAlignment="Center" Margin="25" FontSize="36">
+            <Label Grid.Row="0" HorizontalAlignment="Center" Margin="25" FontSize="48">
                 The Diary Room 2.0
             </Label>
-            <TextBlock Grid.Row="1" TextWrapping="WrapWithOverflow" Margin="25, 25, 25, 0" FontSize="18" TextAlignment="Center" Width="600">
+            <TextBlock Grid.Row="1" TextWrapping="WrapWithOverflow" Margin="50, 50, 50, 25" FontSize="22" TextAlignment="Center" Width="700">
                 This app will show you some of the pictures and videos that we've captured during the workshop series.
                 Above each item, there will be a quick question that we'd like you to answer.
                 Just speak the answer to the question and it will be audio recorded by the app.
             </TextBlock>
-            <Label Grid.Row="2" Margin="25, 25, 25, 0" FontSize="18" HorizontalAlignment="Center">
+            <Label Grid.Row="2" Margin="25, 25, 25, 0" FontSize="22" HorizontalAlignment="Center">
                 Press start when you are ready to enter the diary room.
             </Label>
             <Button Grid.Row="3" HorizontalAlignment="Center" Padding="10" Margin="25" Click="Button_Click_1" FontSize="16">

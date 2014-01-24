@@ -38,7 +38,7 @@ namespace PromptingDiaryRoom
 
             if (file == "")
             {
-                NavigationService.Navigate(new WelcomePage());
+                NavigationService.Navigate(new FinishedPage());
             }
             else
             {
@@ -52,10 +52,16 @@ namespace PromptingDiaryRoom
 
                 if (file.EndsWith(".mp4"))
                 {
+                    PromptLabel.Content = session.GetRandomQuestion("video");
+                    VideoPlayer.Source = new Uri(file);
+
                     ImageViewer.Visibility = Visibility.Collapsed;
+                    VideoPlayer.Visibility = Visibility.Visible;
                 }
                 else
                 {
+                    PromptLabel.Content = session.GetRandomQuestion("picture");
+
                     BitmapImage image = new BitmapImage();
                     image.BeginInit();
                     image.UriSource = new Uri(file);
@@ -63,10 +69,11 @@ namespace PromptingDiaryRoom
 
                     ImageViewer.Source = image;
                     ImageViewer.Visibility = Visibility.Visible;
-
-                    SoundRecorder recorder = (Application.Current as App).Recorder;
-                    recorder.StartRecording(folderPath, "sound.wma");
+                    VideoPlayer.Visibility = Visibility.Collapsed;
                 }
+
+                SoundRecorder recorder = (Application.Current as App).Recorder;
+                recorder.StartRecording(folderPath, "sound.wma");
             }
         }
 
@@ -81,7 +88,7 @@ namespace PromptingDiaryRoom
             DiarySession session = (Application.Current as App).Session;
             if (session.NumViewed > session.Max)
             {
-                NavigationService.Navigate(new WelcomePage());
+                NavigationService.Navigate(new FinishedPage());
             }
             else
             {

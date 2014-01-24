@@ -1,0 +1,4 @@
+﻿What does this {0} remind you of?
+Who took this {0}?
+Does this {0} remind you of anything that happened in the workshops?
+Was this {0} taken or used in a session? If it was, what happened in the session?

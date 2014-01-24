@@ -24,5 +24,19 @@ namespace PromptingDiaryRoom
         {
             InitializeComponent();
         }
+
+        private void NavigationWindow_KeyUp_1(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                SoundRecorder recorder = (Application.Current as App).Recorder;
+                if (recorder.IsRecording)
+                {
+                    recorder.StopRecording();
+                }
+
+                Environment.Exit(0);
+            }
+        }
     }
 }

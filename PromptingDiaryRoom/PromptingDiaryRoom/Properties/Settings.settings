@@ -11,5 +11,8 @@
     <Setting Name="OutputPath" Type="System.String" Scope="User">
       <Value Profile="(Default)">C:\Users\Jon\Documents\Prompting Diary Room\Output</Value>
     </Setting>
+    <Setting Name="FinishedDelay" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">00:00:15</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
