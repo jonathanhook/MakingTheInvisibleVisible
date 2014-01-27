@@ -1,4 +1,10 @@
 ﻿What does this {0} remind you of?
-Who took this {0}?
 Does this {0} remind you of anything that happened in the workshops?
 Was this {0} taken or used in a session? If it was, what happened in the session?
+Did we use this {0} in a session, did it affect your creative practice?
+What ideas did you take from this {0}, or would you take if you were going to write about it?
+What does this {0} reveal or suggest about the workshop series as a whole?
+How does this {0} or any of the other's you've been shown differ from your memory of the workshop activity?
+How do you think your involvement impacts upon other members of the group?
+What is the main thing you notice while looking at this {0}?
+Who's in this {0}? What are they doing? Why do you think it was taken?

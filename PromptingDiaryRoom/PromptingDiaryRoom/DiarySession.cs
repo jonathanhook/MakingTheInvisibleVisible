@@ -30,7 +30,7 @@ namespace PromptingDiaryRoom
             NumViewed = 0;
             Started = DateTime.UtcNow;
             SessionName = EscapePath(Started.ToString());
-            rand = new Random(DateTime.UtcNow.Hour);
+            rand = new Random(DateTime.UtcNow.Millisecond);
 
             OutputPath = Path.Combine(OutputPath, SessionName);
             ParseQuestionFile();
