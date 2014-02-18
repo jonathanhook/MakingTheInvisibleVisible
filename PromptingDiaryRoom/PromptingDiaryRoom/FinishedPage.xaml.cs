@@ -21,29 +21,13 @@ namespace PromptingDiaryRoom
     /// </summary>
     public partial class FinishedPage : Page
     {
-        private DispatcherTimer t;
-
         public FinishedPage()
         {
             InitializeComponent();
         }
 
-        private void Page_Loaded_1(object sender, RoutedEventArgs e)
-        {
-            t = new DispatcherTimer();
-            t.Interval = Properties.Settings.Default.FinishedDelay;
-            t.Tick += t_Tick;
-            t.Start();
-        }
-
-        private void t_Tick(object sender, EventArgs e)
-        {
-            Restart();
-        }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            t.IsEnabled = false;
             Restart();
         }
 

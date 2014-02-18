@@ -38,6 +38,11 @@ namespace PromptingDiaryRoom
 
         public string GetRandom()
         {
+            if (!Directory.Exists(ContentPath))
+            {
+                Directory.CreateDirectory(ContentPath);
+            }
+
             IEnumerable<string> files = Directory.EnumerateFiles(ContentPath);
             if (files.Count() > 0)
             {
