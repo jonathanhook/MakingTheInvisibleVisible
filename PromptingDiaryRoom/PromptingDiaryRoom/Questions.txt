@@ -8,3 +8,6 @@ How does this {0} or any of the other's you've been shown differ from your memor
 How do you think your involvement impacts upon other members of the group?
 What is the main thing you notice while looking at this {0}?
 Who's in this {0}? What are they doing? Why do you think it was taken?
+Who would you like to show this {0} to?
+If you could have taken a {0} during the workshop series, what would it have been of? Who would you have shown it to?
+Are you proud of what we've done in the workshops? Who would you like to tell/show what we've done?

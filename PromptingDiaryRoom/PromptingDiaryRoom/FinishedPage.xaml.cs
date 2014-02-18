@@ -49,7 +49,10 @@ namespace PromptingDiaryRoom
 
         private void Restart()
         {
-            NavigationService.Navigate(new WelcomePage());
+            if (NavigationService != null)
+            {
+                NavigationService.Navigate(new WelcomePage());
+            }
         }
     }
 }
